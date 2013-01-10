@@ -1,4 +1,4 @@
-package uk.co.bodyloss.soundchains;
+package co.uk.bodyloss.soundchains;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
@@ -86,6 +86,7 @@ public class SoundChain {
 		for (int second = 0; second < numSamples / this.sampleRate; second++) {
 			int sampleIncreaseOffset = second * this.sampleRate;
 			
+			// generate one whole seconds worth of samples
 			for (int sampleNum = 0; sampleNum < this.sampleRate; sampleNum++) {
 				long actualSample = sampleNum + sampleIncreaseOffset;
 				
@@ -95,11 +96,12 @@ public class SoundChain {
 				}
 				
 				int baseAddr = sampleNum * 4;
-				int nValue = (int) (sample * 24000.0f);
-				buffer[baseAddr + 0] = (byte) (nValue & 0xFF);
-				buffer[baseAddr + 1] = (byte) ((nValue >>> 8) & 0xFF);
-				buffer[baseAddr + 2] = (byte) (nValue & 0xFF);
-				buffer[baseAddr + 3] = (byte) ((nValue >>> 8) & 0xFF);
+				int value = (int) (sample * 24000.0f);
+				// little endian encoding to bytes
+				buffer[baseAddr + 0] = (byte) (value & 0xFF);
+				buffer[baseAddr + 1] = (byte) ((value >>> 8) & 0xFF);
+				buffer[baseAddr + 2] = (byte) (value & 0xFF);
+				buffer[baseAddr + 3] = (byte) ((value >>> 8) & 0xFF);
 			}
 			
 			line.write(buffer, 0, buffer.length);

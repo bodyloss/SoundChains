@@ -1,4 +1,4 @@
-import uk.co.bodyloss.soundchains.*;
+import co.uk.bodyloss.soundchains.*;
 
 
 public class Test {

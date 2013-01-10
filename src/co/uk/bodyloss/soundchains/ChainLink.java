@@ -1,4 +1,4 @@
-package uk.co.bodyloss.soundchains;
+package co.uk.bodyloss.soundchains;
 
 /**
  * A single link in a SoundChain. Responsible for processing

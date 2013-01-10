@@ -1,4 +1,4 @@
-package uk.co.bodyloss.soundchains;
+package co.uk.bodyloss.soundchains;
 
 public class Generators {
 
