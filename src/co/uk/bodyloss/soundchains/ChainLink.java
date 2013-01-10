@@ -6,12 +6,21 @@ package co.uk.bodyloss.soundchains;
  * @author jciechanowicz
  *
  */
-public interface ChainLink {
+public abstract class ChainLink {
+	/**
+	 * Sample rate that this link processes at
+	 */
+	protected int sampleRate;
+	
 	/**
 	 * Process a single sample
 	 * @param sample the sample value
 	 * @param currentSample the current sample we are at
 	 * @return transformed sample
 	 */
-	float processSample(float sample, long currentSample);		
+	public abstract float processSample(float sample, long sampleNum);
+	
+	public void instantiate(int sampleRate) {
+		this.sampleRate = sampleRate;
+	}
 }

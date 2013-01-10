@@ -13,7 +13,7 @@ public class SoundChain {
 	
 	private int sampleRate = 44100;
 	private Generator genererator = null;
-	private ChainLink[] links = new ChainLink[1];
+	private ChainLink[] links = new ChainLink[2];
 	private int index = 0;
 	
 	public SoundChain(int sampleRate) {
@@ -38,11 +38,12 @@ public class SoundChain {
 	 */
 	public SoundChain addLink(ChainLink link) {
 		// check whether we have to expand our links array
-		if (index == this.links.length - 1) {
+		if (index == this.links.length) {
 			ChainLink[] temp = links;
-			this.links = new ChainLink[(int) (links.length * EXPANSION_FACTOR)];
+			this.links = new ChainLink[(int) ((double)links.length * EXPANSION_FACTOR)];
 			System.arraycopy(temp, 0, this.links, 0, temp.length);
 		}
+		link.instantiate(this.sampleRate);
 		this.links[index++] = link;
 		return this;
 	}
