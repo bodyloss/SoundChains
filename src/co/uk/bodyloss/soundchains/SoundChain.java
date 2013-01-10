@@ -12,7 +12,7 @@ public class SoundChain {
 	private final double EXPANSION_FACTOR = 1.5;
 	
 	private int sampleRate = 44100;
-	private Generator genererator = null;
+	private Generator generator = null;
 	private ChainLink[] links = new ChainLink[2];
 	private int index = 0;
 	
@@ -26,7 +26,8 @@ public class SoundChain {
 	 * @return The chain
 	 */
 	public SoundChain setGenerator(Generator generator) {
-		this.genererator = generator;
+		this.generator = generator;
+		this.generator.setSampleRate(this.sampleRate);
 		return this;
 	}
 	
@@ -91,13 +92,13 @@ public class SoundChain {
 			for (int sampleNum = 0; sampleNum < this.sampleRate; sampleNum++) {
 				long actualSample = sampleNum + sampleIncreaseOffset;
 				
-				float sample = this.genererator.getNextSample(actualSample, this.sampleRate);
+				float sample = this.generator.getNextSample(actualSample);
 				for (int j = 0; j < this.index; j++) {
 					sample = this.links[j].processSample(sample, actualSample);
 				}
 				
 				int baseAddr = sampleNum * 4;
-				int value = (int) (sample * 24000.0f);
+				int value = (int) (sample * 30000.0f);
 				// little endian encoding to bytes
 				buffer[baseAddr + 0] = (byte) (value & 0xFF);
 				buffer[baseAddr + 1] = (byte) ((value >>> 8) & 0xFF);
